@@ -13,6 +13,7 @@ namespace Dungeon_Crawler.Game
         public Dice AttackDice { get; protected set; }
         public Dice DefenceDice { get; protected set; }
 
+        public bool IsDead => HP <= 0;
         public abstract void Update(LevelData level, Player player);
         public void TakeDamage(int amount)
         {
