@@ -44,11 +44,11 @@ namespace Dungeon_Crawler.Game
                 if (damage > 0)
                 {
                     player.TakeDamage(damage);
-                    Program.log.AddColored($"{attackText}, and dealt {damage} damage!", ConsoleColor.Red);
+                    Game.log.AddColored($"{attackText}, and dealt {damage} damage!", ConsoleColor.Red);
                 }
                 else
                 {
-                    Program.log.AddColored($"{attackText}, but did not manage to make any damage.", ConsoleColor.Green);
+                    Game.log.AddColored($"{attackText}, but did not manage to make any damage.", ConsoleColor.Green);
                 }
 
                 if (player.HP > 0)
@@ -62,15 +62,15 @@ namespace Dungeon_Crawler.Game
                     if (counterDamage > 0)
                     {
                         TakeDamage(counterDamage);
-                        Program.log.AddColored($"{counterText}, and dealt {counterDamage} damage!", ConsoleColor.DarkYellow);
+                        Game.log.AddColored($"{counterText}, and dealt {counterDamage} damage!", ConsoleColor.DarkYellow);
                     }
                     else
                     {
-                        Program.log.AddColored($"{counterText}, but did not manage to make any damage.", ConsoleColor.DarkYellow);
+                        Game.log.AddColored($"{counterText}, but did not manage to make any damage.", ConsoleColor.DarkYellow);
                     }
 
                     if (HP <= 0)
-                        Program.log.AddColored($"{Name} has been defeated!", ConsoleColor.Yellow);
+                        Game.log.AddColored($"{Name} has been defeated!", ConsoleColor.Yellow);
                 }
 
 
