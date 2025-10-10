@@ -7,7 +7,7 @@ namespace Dungeon_Crawler.Game
     {
         private List<string> entries = new List<string>();
         private List<ConsoleColor> colors = new List<ConsoleColor>();
-        private int maxEntries = 5; // Visa senaste 5 raderna
+        private int maxEntries = 3;
 
         public void Add(string message)
         {
@@ -28,11 +28,10 @@ namespace Dungeon_Crawler.Game
 
         public void Draw(int startY)
         {
-            // Säkerställ att vi inte skriver utanför fönstret
+
             if (startY >= Console.BufferHeight - (maxEntries + 2))
                 startY = Console.BufferHeight - (maxEntries + 2);
 
-            // Rensa gammal text under loggen
             for (int i = 0; i < maxEntries + 2; i++)
             {
                 if (startY + i < Console.BufferHeight)
@@ -42,12 +41,10 @@ namespace Dungeon_Crawler.Game
                 }
             }
 
-            // Rita rubriken
             Console.SetCursorPosition(0, startY);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("=== Combat Log ===");
 
-            // Rita meddelanden med färg
             int y = startY + 1;
             for (int i = 0; i < entries.Count; i++)
             {
