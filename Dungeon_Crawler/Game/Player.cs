@@ -26,10 +26,17 @@ namespace Dungeon_Crawler.Game
             X += dx;
             Y += dy;
         }
+        public void TakeDamage(int amount)
+        {
+            HP -= amount;
+            if (HP < 0)
+                HP = 0;
+        }
+
 
         public void Attack(Enemy enemy, CombatLog log)
         {
-            // --- Spelarens attack ---
+           
             int attackRoll = AttackDice.Throw();
             int defenceRoll = enemy.DefenceDice.Throw();
             int damage = attackRoll - defenceRoll;
@@ -46,7 +53,7 @@ namespace Dungeon_Crawler.Game
                 log.AddColored($"{playerAttackText}, but did not manage to make any damage.", ConsoleColor.DarkYellow);
             }
 
-            // --- Fiendens motattack ---
+            
             if (enemy.HP > 0)
             {
                 int counterAttack = enemy.AttackDice.Throw();
