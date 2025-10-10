@@ -14,6 +14,17 @@ namespace Dungeon_Crawler.Game
         public int Width { get; private set; }
         public int Height { get; private set; }
 
+        public void UpdateVisibility(Player player, int visionRange)
+        {
+            foreach (var e in Elements)
+            {
+                double distance = Math.Sqrt(Math.Pow(e.X - player.X, 2) + Math.Pow(e.Y - player.Y, 2));
+                e.Visible = distance <= visionRange;
+
+                if (e.Visible)
+                    e.Seen = true;
+            }
+        }
 
         public void Load(string filename)
         {

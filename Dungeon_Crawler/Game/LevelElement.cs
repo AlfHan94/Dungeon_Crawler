@@ -12,9 +12,14 @@ namespace Dungeon_Crawler.Game
         public int Y { get; set; }
         public char Symbol { get; set; }
         public ConsoleColor Color { get; set; }
+        public bool Visible { get; set; } = false;
+        public bool Seen { get; set; } = false;
 
         public virtual void Draw()
         {
+            if (!Visible && !(Seen && this is Wall))
+                return;
+
             Console.ForegroundColor = Color;
             Console.SetCursorPosition(X, Y);
             Console.Write(Symbol);

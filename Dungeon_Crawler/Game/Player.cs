@@ -78,7 +78,13 @@ namespace Dungeon_Crawler.Game
                 log.AddColored($"{enemy.Name} has been defeated!", ConsoleColor.Yellow);
             }
         }
-
+        public override void Draw()
+        {
+            Console.ForegroundColor = Color;
+            Console.SetCursorPosition(X, Y);
+            Console.Write(Symbol);
+            Console.ResetColor();
+        }
 
 
     }

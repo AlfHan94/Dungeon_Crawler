@@ -20,6 +20,7 @@ class Program
         {
             Console.Clear();
 
+            level.UpdateVisibility(player, 5);
             foreach (var e in level.Elements)
                 e.Draw();
 
@@ -87,6 +88,42 @@ class Program
             }
             foreach (var enemy in level.Enemies)
                 enemy.Update(level, player);
+
+            if (player.HP <= 0)
+            {
+                Console.Clear();
+                string text = "GAME OVER!";
+                int x = (Console.WindowWidth - text.Length) / 2;
+                int y = Console.WindowHeight / 2;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.ForegroundColor = (i % 2 == 0) ? ConsoleColor.Red : ConsoleColor.DarkRed;
+                    Console.SetCursorPosition(x, y);
+                    Console.Write(text);
+                    Thread.Sleep(300);
+                }
+
+                Console.ResetColor();
+                Console.Clear();
+
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine(text);
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.SetCursorPosition((Console.WindowWidth - 24) / 2, y + 2);
+                Console.WriteLine("Press any key to exit...");
+                Console.ResetColor();
+
+                Console.ReadKey(true);
+                running = false;
+                continue;
+            }
+
+
 
             turn++;
         }
