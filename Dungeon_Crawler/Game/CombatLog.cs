@@ -7,13 +7,7 @@ namespace Dungeon_Crawler.Game
     {
         private List<string> entries = new List<string>();
         private List<ConsoleColor> colors = new List<ConsoleColor>();
-        private int maxEntries = 3;
-
-        public void Add(string message)
-        {
-            AddColored(message, ConsoleColor.White);
-        }
-
+        private int maxEntries = 5;
         public void AddColored(string message, ConsoleColor color)
         {
             entries.Add(message);
@@ -25,10 +19,8 @@ namespace Dungeon_Crawler.Game
                 colors.RemoveAt(0);
             }
         }
-
         public void Draw(int startY)
         {
-
             if (startY >= Console.BufferHeight - (maxEntries + 2))
                 startY = Console.BufferHeight - (maxEntries + 2);
 
@@ -55,7 +47,6 @@ namespace Dungeon_Crawler.Game
                     Console.WriteLine(entries[i].PadRight(Console.WindowWidth - 1));
                 }
             }
-
             Console.ResetColor();
         }
     }

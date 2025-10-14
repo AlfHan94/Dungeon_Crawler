@@ -20,7 +20,8 @@ namespace Dungeon_Crawler.Game
             {
                 double distance = Math.Sqrt(Math.Pow(e.X - player.X, 2) + Math.Pow(e.Y - player.Y, 2));
                 e.Visible = distance <= visionRange;
-
+                if (e is Enemy enemy && enemy.IsDead)
+                    e.Visible = false;
                 if (e.Visible)
                     e.Seen = true;
             }
@@ -30,13 +31,10 @@ namespace Dungeon_Crawler.Game
         {
             Elements.Clear();
             Enemies.Clear();
-
             var lines = File.ReadAllLines(filename);
-
             for (int y = 0; y < lines.Length; y++)
             {
                 string line = lines[y];
-
                 for (int x = 0; x < line.Length; x++)
                 {
                     char ch = line[x];
@@ -64,7 +62,6 @@ namespace Dungeon_Crawler.Game
                     }
                 }
             }
-
             Height = lines.Length;
             Width = lines.Max(line => line.Length);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Linq;
 
 namespace Dungeon_Crawler.Game
 {
@@ -13,16 +14,13 @@ namespace Dungeon_Crawler.Game
 
             var level = new LevelData();
             level.Load("Levels/Level1.txt");
-
             var player = new Player(level.PlayerStart.x, level.PlayerStart.y);
-
             int turn = 0;
             bool running = true;
 
             while (running)
             {
                 Console.Clear();
-
                 level.UpdateVisibility(player, 5);
 
                 foreach (var e in level.Elements)
@@ -34,6 +32,7 @@ namespace Dungeon_Crawler.Game
                 Console.SetCursorPosition(0, level.Height + 1);
                 Console.WriteLine($"Player HP: {player.HP}   Turn: {turn}   Enemies left: {level.Enemies.Count}");
                 Console.WriteLine("Tryck ESC för att avsluta");
+
                 log.Draw(level.Height + 3);
 
                 var key = Console.ReadKey(true).Key;
@@ -91,9 +90,16 @@ namespace Dungeon_Crawler.Game
                         }
                     }
                 }
-
-                foreach (var enemy in level.Enemies)
-                    enemy.Update(level, player);
+                foreach (var enemy in level.Enemies.ToList())
+                {
+                    if (!enemy.IsDead)
+                        enemy.Update(level, player);
+                }
+                foreach (var dead in level.Enemies.Where(e => e.IsDead).ToList())
+                {
+                    level.Enemies.Remove(dead);
+                    level.Elements.Remove(dead);
+                }
 
                 if (player.HP <= 0)
                 {
@@ -109,20 +115,16 @@ namespace Dungeon_Crawler.Game
                         Console.Write(text);
                         Thread.Sleep(300);
                     }
-
                     Console.ResetColor();
                     Console.Clear();
-
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(x, y);
                     Console.WriteLine(text);
                     Console.ResetColor();
-
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.SetCursorPosition((Console.WindowWidth - 24) / 2, y + 2);
                     Console.WriteLine("Press any key to exit...");
                     Console.ResetColor();
-
                     Console.ReadKey(true);
                     running = false;
                     continue;

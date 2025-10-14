@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dungeon_Crawler.Game
 {
@@ -12,12 +8,17 @@ namespace Dungeon_Crawler.Game
         public int Y { get; set; }
         public char Symbol { get; set; }
         public ConsoleColor Color { get; set; }
+
         public bool Visible { get; set; } = false;
         public bool Seen { get; set; } = false;
+
 
         public virtual void Draw()
         {
             if (!Visible && !(Seen && this is Wall))
+                return;
+
+            if (this is Enemy enemy && enemy.IsDead)
                 return;
 
             Console.ForegroundColor = Color;

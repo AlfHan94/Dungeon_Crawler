@@ -17,19 +17,18 @@ namespace Dungeon_Crawler.Game
             AttackDice = new Dice(1, 6, 3);
             DefenceDice = new Dice(1, 6, 1);
         }
-
         public override void Update(LevelData level, Player player)
         {
+            if (HP <= 0)
+                return;
             int dx = 0, dy = 0;
-
             switch (rng.Next(4))
             {
-                case 0: dx = 1; break;   
-                case 1: dx = -1; break;  
-                case 2: dy = 1; break;   
-                case 3: dy = -1; break;  
+                case 0: dx = 1; break;
+                case 1: dx = -1; break;
+                case 2: dy = 1; break;
+                case 3: dy = -1; break;
             }
-
             int newX = X + dx;
             int newY = Y + dy;
 
@@ -57,27 +56,30 @@ namespace Dungeon_Crawler.Game
                     int enemyDef = DefenceDice.Throw();
                     int counterDamage = counterAttack - enemyDef;
 
-                    string counterText = $"You (ATK: {player.AttackDice} => {counterAttack} counterattacked the {Name} (DEF: {defenceRoll} => {enemyDef})";
+                    string counterText = $"You (ATK: {player.AttackDice} => {counterAttack}) counterattacked the {Name} (DEF: {DefenceDice} => {enemyDef})";
 
                     if (counterDamage > 0)
                     {
                         TakeDamage(counterDamage);
-                        Game.log.AddColored($"{counterText}, and dealt {counterDamage} damage!", ConsoleColor.DarkYellow);
+
+                        if (HP <= 0)
+                        {
+                            Game.log.AddColored($"{counterText}, and dealt {counterDamage} damage — killing the {Name}!", ConsoleColor.Yellow);
+                        }
+                        else
+                        {
+                            Game.log.AddColored($"{counterText}, and dealt {counterDamage} damage!", ConsoleColor.DarkYellow);
+                        }
                     }
                     else
                     {
                         Game.log.AddColored($"{counterText}, but did not manage to make any damage.", ConsoleColor.DarkYellow);
                     }
-
-                    if (HP <= 0)
-                        Game.log.AddColored($"{Name} has been defeated!", ConsoleColor.Yellow);
                 }
 
-
-                return; 
+                return;
             }
 
-            
             bool blocked = false;
             foreach (var e in level.Elements)
             {
@@ -87,7 +89,6 @@ namespace Dungeon_Crawler.Game
                     break;
                 }
             }
-
 
             if (!blocked)
             {
