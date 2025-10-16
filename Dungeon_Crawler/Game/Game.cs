@@ -31,7 +31,7 @@ namespace Dungeon_Crawler.Game
 
                 Console.SetCursorPosition(0, level.Height + 1);
                 Console.WriteLine($"Player HP: {player.HP}   Turn: {turn}   Enemies left: {level.Enemies.Count}");
-                Console.WriteLine("Tryck ESC för att avsluta");
+                Console.WriteLine("Press ESC to exit...");
 
                 log.Draw(level.Height + 3);
 

@@ -57,18 +57,6 @@ namespace Dungeon_Crawler.Game
                 int defenceRoll = player.DefenceDice.Throw();
                 int damage = attackRoll - defenceRoll;
 
-                string attackText = $"The {Name} (ATK: {AttackDice} => {attackRoll}) attacked you (DEF: {player.DefenceDice} => {defenceRoll})";
-
-                if (damage > 0)
-                {
-                    player.TakeDamage(damage);
-                    Game.log.AddColored($"{attackText}, and dealt {damage} damage!", ConsoleColor.Red);
-                }
-                else
-                {
-                    Game.log.AddColored($"{attackText}, but did not manage to make any damage.", ConsoleColor.Green);
-                }
-
                 if (player.HP > 0)
                 {
                     int counterAttack = player.AttackDice.Throw();
